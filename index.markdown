@@ -1,6 +1,5 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
-
 layout: home
+title: home
 ---
+Questo sito vuol essere una raccolta di appunti raccolti nel corso della mia carriera di insegnante, che al momento è alquanto breve. Spero nel corso degli anni di ampliare i contenuti proposti.

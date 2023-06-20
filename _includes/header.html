@@ -1,0 +1,10 @@
+<header>
+  <a href="/" class="logo"><i class="fa-solid fa-code"></i> Carmelo Castiglione</a>
+  <nav class="navbar">
+    <ul>
+      {% for item in site.data.navigation %}
+      <li><a href="{{ item.link }}"{% if page.url == item.link %} class="active"{% endif %}>{{ item.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </nav>
+</header>

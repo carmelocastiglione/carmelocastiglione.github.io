@@ -1,0 +1,12 @@
+- name: Home
+  link: /
+- name: About
+  link: /about
+- name: Didattica
+  link: /didattica
+- name: Progetti
+  link: /progetti
+- name: Guide
+  link: /guide
+#- name: Blog
+#  link: /blog
