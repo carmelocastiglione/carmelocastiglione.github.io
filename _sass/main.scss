@@ -1,21 +1,8 @@
-$color_background: #fcfcff;
-$color_on_background: #1a1c1e;
-$color_primary: #006493;
-$color_on_primary: #ffffff;
-$color_primary_container: #cae6ff;
-$color_on_primary_container: #001e30;
-$color_secondary: #50606f;
-$color_on_secondary: #ffffff;
-$color_secondary_container: #d3e5f6;
-$color_on_secondary_container: #0c1d29;
-$color_tertiary: #65587b;
-$color_on_tertiary: #ffffff;
-$color_tertiary_container: #ebdcff;
-$color_on_tertiary_container: #201634;
-$color_error: #ba1a1a;
-$color_on_error: #ffffff;
-$color_error_container: #ffdad6;
-$color_on_error_container: #410002;
+$color_background: #E8F7EE;
+$color_text: #272932;
+$color_accent: #FF6978;
+$color_alt_1: #1B998B;
+$color_alt_2: #989FCE;
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap");
@@ -31,15 +18,6 @@ $color_on_error_container: #410002;
 html {
   /* 62.5% of 16px browser font size is 10px */
   font-size: 62.5%;
-}
-
-pre {
-  margin: 1rem;
-  padding: 1rem;
-}
-
-ul {
-  margin: 1rem 0rem 1rem 3rem;
 }
 
 body {
@@ -59,7 +37,7 @@ header {
 header .logo {
   font-size: 1.9rem;
   font-weight: 800;
-  color: $color_on_background;
+  color: $color_text;
 }
 
 header .logo i {
@@ -68,7 +46,7 @@ header .logo i {
 }
 
 header .logo:hover {
-  color: $color_primary;
+  color: $color_accent;
   transition: all 0.2s linear;
 }
 
@@ -77,7 +55,6 @@ header .navbar ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0px;
 }
 
 header .navbar ul li {
@@ -88,13 +65,13 @@ header .navbar ul li {
 }
 
 header .navbar ul li a {
-  color: $color_on_background;
+  color: $color_text;
 }
 
 header .navbar ul li a.active,
 header .navbar ul li a:hover {
-  color: $color_primary;
-  border-bottom: 0.2rem solid $color_primary;
+  color: $color_accent;
+  border-bottom: 0.2rem solid $color_accent;
   padding: 0.5rem 0;
   transition: all 0.2s linear;
 }
@@ -106,7 +83,7 @@ header .navbar ul li a:hover {
   align-items: center;
   justify-content: center;
   padding: 4rem 8rem;
-  background-color: $color_primary_container;
+  background-color: $color_alt_2;
 }
 
 .home .content {
@@ -116,25 +93,26 @@ header .navbar ul li a:hover {
 .home .content h2 {
   font-size: 4rem;
   font-weight: 800;
-  color: $color_on_background;
+  color: $color_text;
+  line-height: 95%;
 }
 
 .home .content h2 span {
   font-size: 4rem;
   font-weight: 800;
-  color: $color_primary;
+  color: $color_accent;
 }
 
 .home .content p {
   font-size: 2.5rem;
-  color: $color_on_background;
+  color: $color_text;
   font-weight: 600;
   padding: 1rem 0;
 }
 
 .home .content p span {
   font-size: 2.5rem;
-  color: $color_primary;
+  color: $color_accent;
   font-weight: 600;
   padding: 1rem 0;
 }
@@ -144,8 +122,8 @@ header .navbar ul li a:hover {
   margin-top: 2rem;
   border-radius: 4em;
   transition: 0.5s;
-  color: $color_on_primary;
-  background: $color_primary;
+  color: #fff;
+  background: #2506ad;
   box-shadow: 0px 5px 18px rgba(48, 68, 247, 0.6);
   font-family: "Nunito", sans-serif;
   font-weight: 700;
@@ -155,8 +133,7 @@ header .navbar ul li a:hover {
 }
 
 .home .btn:hover {
-  background: $color_secondary;
-  color: $color_on_secondary;
+  background: #1a047e;
 }
 
 /* social icons start */
@@ -165,13 +142,9 @@ header .navbar ul li a:hover {
   margin-top: 4rem;
 }
 .socials .social-icons {
-  padding: 0;
-  margin: 0;
+  padding-left: 0;
+  margin-bottom: 0;
   list-style: none;
-}
-.socials .social-icons ul {
-  padding: 0px;
-  margin: 0px;
 }
 .socials .social-icons li {
   display: inline-block;
@@ -181,8 +154,8 @@ header .navbar ul li a:hover {
   font-size: 2rem;
   display: inline-block;
   line-height: 44px;
-  color: $color_on_secondary;
-  background-color: $color_secondary;
+  color: #00d9ff;
+  background-color: #09011b;
   width: 44px;
   height: 44px;
   text-align: center;
@@ -195,8 +168,14 @@ header .navbar ul li a:hover {
 .social-icons a:active,
 .social-icons a:focus,
 .social-icons a:hover {
-  color: $color_on_primary;
-  background-color: $color_primary;
+  color: #fff;
+  background-color: #0685da;
+}
+.social-icons a.github:hover {
+  background-color: #0e0e0e;
+}
+.social-icons a.linkedin:hover {
+  background-color: #007bb6;
 }
 
 .home .image {
@@ -208,7 +187,7 @@ header .navbar ul li a:hover {
   display: block;
   margin: 0 auto;
   border-radius: 50%;
-  background-color: $color_secondary;
+  background-color: $color_alt_1;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -247,7 +226,7 @@ h3 {
 }
 
 .intro .heading span {
-  color: $color_primary;
+  color: $color_accent;
 }
 
 .intro p {
@@ -260,12 +239,12 @@ h3 {
 
 footer {
   padding: 1rem;
-  background: $color_tertiary_container;
+  background: $color_alt_1;
   text-align: center;
   font-size: 1.5rem;
   font-family: "Nunito", sans-serif;
   font-weight: 600;
-  color: $color_on_tertiary_container;
+  color: #fff;
 }
 
 footer .fa {
@@ -275,12 +254,12 @@ footer .fa {
 }
 
 footer a {
-  color: $color_primary;
+  color: $color_accent;
 }
 
 footer a.active,
 footer a:hover {
-  color: $color_on_background;
+  color: $color_text;
   transition: all 0.2s linear;
 }
 
@@ -312,4 +291,13 @@ footer a:hover {
   display: block;
   padding: 2rem;
   margin: 2rem auto;
+}
+
+pre {
+  margin: 1rem;
+  padding: 1rem;
+}
+
+ul {
+  margin: 1rem 0rem 1rem 3rem;
 }
