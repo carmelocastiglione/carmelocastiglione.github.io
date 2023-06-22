@@ -55,6 +55,8 @@ header .navbar ul {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0px;
+  padding: 0px;
 }
 
 header .navbar ul li {
@@ -94,7 +96,6 @@ header .navbar ul li a:hover {
   font-size: 4rem;
   font-weight: 800;
   color: $color_text;
-  line-height: 95%;
 }
 
 .home .content h2 span {
@@ -142,8 +143,8 @@ header .navbar ul li a:hover {
   margin-top: 4rem;
 }
 .socials .social-icons {
-  padding-left: 0;
-  margin-bottom: 0;
+  padding: 0px;
+  margin: 0px;
   list-style: none;
 }
 .socials .social-icons li {
