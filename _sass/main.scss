@@ -118,15 +118,21 @@ header .navbar ul li a:hover {
   padding: 1rem 0;
 }
 
+.qrcode {
+  width: 150px;
+  margin-top: 3rem;
+  margin-left: 1rem;
+}
+
 /* social icons start */
 .socials {
-  position: relative;
   margin-top: 4rem;
 }
 .socials .social-icons {
   padding: 0px;
-  margin: 0px;
+  margin: 0px auto;
   list-style: none;
+  text-align: center;
 }
 .socials .social-icons li {
   display: inline-block;
@@ -141,6 +147,7 @@ header .navbar ul li a:hover {
   width: 44px;
   height: 44px;
   text-align: center;
+  margin-left: 8px;
   margin-right: 8px;
   border-radius: 100%;
   -webkit-transition: all 0.2s linear;
