@@ -50,6 +50,21 @@ header .logo:hover {
   transition: all 0.2s linear;
 }
 
+.hamburger-menu {
+  background-color: transparent;
+  border: 10px;
+  color: $color_text;
+  cursor: pointer;
+  font-size: 30px;
+  margin-left: 32px;
+  line-height: 70px;
+  display: none;
+}
+
+.hamburger:focus {
+  outline: none;
+}
+
 header .navbar ul {
   list-style: none;
   display: flex;
@@ -283,4 +298,39 @@ pre {
 
 ul {
   margin: 1rem 0rem 1rem 3rem;
+}
+
+@media (max-width: 576px) {
+  header {
+    padding: 1.6rem 2.6rem;
+  }
+
+  header .navbar ul {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  header .navbar ul.show {
+    display: flex;
+    align-items: flex-end;
+  }
+  
+  .hamburger-menu {
+    display: block;
+    float: right;
+  }
+
+  header .logo.hide {
+    display: none;
+  }
+
+  header.hide {
+    justify-content: end;
+  } 
+
+  header .navbar ul li a.active,
+  header .navbar ul li a:hover {
+    border: none;
+  }
 }
