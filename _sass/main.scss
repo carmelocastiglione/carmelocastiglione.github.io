@@ -3,6 +3,7 @@ $color_background_reverse: #21294c;
 $color_text: #21294c;
 $color_text_reverse: #f3ffff;
 $color_accent: #f43854;
+$color_accent_alt: #e07572;
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap");
@@ -23,6 +24,24 @@ html {
 body {
   background: $color_background;
   font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+p {
+  margin-top: 1rem;
+  text-align: justify;
+}
+
+a {
+  color: $color_accent;
+}
+
+a.active,
+a:hover {
+  color: $color_accent_alt;
+  transition: all 0.2s linear; 
 }
 
 header {
@@ -236,6 +255,8 @@ h3 {
 }
 
 footer {
+  margin-top: auto;
+  width: 100%;
   padding: 1rem;
   background: $color_background_reverse;
   text-align: center;
