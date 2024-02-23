@@ -22,13 +22,11 @@ permalink: /progetti
   <p>La prima cosa da fare, se si ha davanti un Raspberry nuovo, è installare il sistema operativo sulla scheda microSD. Oggi la suluzione più facile è quella di installare Raspberry Pi OS tramite un software chiamato <a href="https://www.raspberrypi.com/software/" target="blank">Raspberry Pi Imager</a>. Troverete molte più informazioni <a href="https://www.raspberrypi.com/documentation/computers/getting-started.html" target="blank">a questo link</a>. Il programma di installazione ha questo aspetto:
   <img class="image" src="/assets/images/rpi_imager.png" width="600">
   Impostare i parametri:
-<pre>
-Sistema operativo: Raspberry Pi OS (32bit)
+<pre><code class="language-plaintext">Sistema operativo: Raspberry Pi OS (32bit)
 Scheda SD: selezionare drive
-</pre>
-  Cliccando sulla rotellina è possibile impostare i parametri avanzati che ci permetteranno di usare il Rasbperry in modalità headless (senza uno schermo)
-<pre>
-Imager > Impostazioni avanzate (servono per l'headless)
+</code></pre>
+Cliccando sulla rotellina è possibile impostare i parametri avanzati che ci permetteranno di usare il Rasbperry in modalità headless (senza uno schermo)
+<pre><code class="language-plaintext">Imager > Impostazioni avanzate (servono per l'headless)
 Nome host: raspberrypi.local
 Abilita SSH: Usa password autenticazione
 Imposta nome utente e password: raspberryuser / serverpass
@@ -38,37 +36,32 @@ Configura WiFI:
 Imposta configurazioni locali
 	Fuso orario: Europe/Rome
 	Layout tastiera: it
-</pre>
+</code></pre>
 A questo punto confermare e attendere la scrittura del Sistema Operativo sulla scheda di memoria
 
 <h3>Come trovare l'IP del Raspberry</h3>
 Metodo immeditato (usare lo stesso nome host impostato nel programma di installazione): 
-<pre>
-ping raspberrypi.local -4
-</pre>
+<pre><code class="language-bash">ping raspberrypi.local -4</code></pre>
 
 <h3>Come collegarsi al Raspberry</h3>
 A questo punto, conoscendo l'indirizzo IP del Raspberry, è possibile collegarsi ad esso tramite SSH tramite il comando:
-<pre>
-ssh raspberryuser@192.168.1.x (IP del Raspberry trovato sopra)
-</pre>
+<pre><code class="language-bash">ssh raspberryuser@192.168.1.x</code></pre>
+Dove la x rappresenta l'ultima cifra dell'IP trovato sopra.<br>
 Dire sì al fingerprint e inserire la password
 
 <h3>Per far collegare il Raspberry ad una rete WiFi</h3>
 Nel caso in cui bisogna collegare il Raspberry ad una rete WiFi nuova, è necessario collegarlo ad un monitor e inserire manualmente i dati della rete WiFi:
-<pre>
-sudo raspi-config
+<pre><code class="language-plaintext">sudo raspi-config
 1 System Options
 S1 Wireless LAN
 Inserire SSID e password
-</pre>
+</code></pre>
 
 <h3>Controllo aggiornamenti</h3>
 E' sempre utile aggiornare il Raspberry:
-<pre>
-sudo apt-get update
+<pre><code class="language-bash">sudo apt-get update
 sudo apt-get upgrade
-</pre>
+</code></pre>
 
 <h3>InfluxDB</h3>
 <p>InfluxDB sarà il database che salverà in maniera definitiva i dati provenienti dal server MQTT. Su Raspberry a 32bit è necessario installare la versione v1 di InfluxDB. Il comando sudo apt-get install influxdb non funziona (manca il client), quindi lo installo da repository. A <a href="https://pimylifeup.com/raspberry-pi-influxdb/" target="_blank">questo link</a> trovate una guida.</p>
@@ -76,135 +69,124 @@ sudo apt-get upgrade
 <p>InfluxDB gira su localhost:8086</p>
 
 <p>Su SSH si usa il tasto destro del mouse per incollare</p>
-<pre>
-curl https://repos.influxdata.com/influxdata-archive.key | gpg --dearmor | sudo tee /usr/share/keyrings/influxdb-archive-keyring.gpg >/dev/null
+<pre><code class="language-bash">curl https://repos.influxdata.com/influxdata-archive.key | gpg --dearmor | sudo tee /usr/share/keyrings/influxdb-archive-keyring.gpg >/dev/null
 
 echo "deb [signed-by=/usr/share/keyrings/influxdb-archive-keyring.gpg] https://repos.influxdata.com/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/influxdb.list
 
 sudo apt update
 sudo apt install influxdb
-</pre>
+</code></pre>
 
 Aggiungo il servizio all'avvio del sistema:
-<pre>
-sudo systemctl unmask influxdb
+<pre><code class="language-bash">sudo systemctl unmask influxdb
 sudo systemctl enable influxdb
 sudo systemctl start influxdb
-</pre>
+</code></pre>
 
 Eseguo InfluxDB e creo il database che utilizzerò per salvare i dati:
-<pre>
+<pre><code class="language-plaintext">
 influx
 CREATE DATABASE arduino
 exit
-</pre>
+</code></pre>
 
 Opzionale: nel caso in cui vogliate fare dei test, vi consiglio di creare un altro database e inserire dei dati di prova:
-<pre>
-influx
-CREATE DATABASE db_test_temperature
+<pre><code class="language-plaintext">influx</code></pre>
+<pre><code class="language-sql">CREATE DATABASE db_test_temperature
+
 USE db_test_temperature
+
 INSERT temperatura,location=soggiorno value=20
 INSERT temperatura,location=soggiorno value=10
 INSERT temperatura,location=stanza_da_letto value=34
 INSERT temperatura,location=stanza_da_letto value=23
 
 SELECT * FROM temperatura
-SELECT value FROM temperatura WHERE location='soggiorno'
+SELECT value FROM temperatura WHERE location='soggiorno'</code></pre>
 
-exit
-</pre>
+<pre><code class="language-plaintext">exit</code></pre>
 
 <h3>Grafana</h3>
 Grafana è il software che ci permetterà di visualizzare i dati salvati nel DB. Per installarlo:
-<pre>
+<pre><code class="language-bash">
 wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
 echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
 
 sudo apt-get update
 sudo apt-get install -y grafana
-</pre>
+</code></pre>
 
 Opzionale: se si vuole cambiare il refresh minimo (di default 1 secondo):
-<pre>
-sudo nano /etc/conf/grafana.ini
+<pre><code class="language-bash">sudo nano /etc/conf/grafana.ini
 min_refresh_interval = 100ms (senza il punto e virgola)
-CTRL+X, Y, invio
-</pre>
+</code></pre>
+<p>CTRL+X, Y, invio</p>
 
-Abilito il server all'avvio e lo eseguo:
-<pre>
-sudo systemctl enable grafana-server
+<p>Abilito il server all'avvio e lo eseguo:</p>
+<pre><code class="language-bash">sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
-</pre>
+</code></pre>
 
 A questo punto, collegandosi all'indirizzo IP del server Raspberry alla porta 3000, si entrerà in Grafana e si dovrà cambiare la password di default:
-<pre>
-http://raspberryip:3000
+<pre><code class="language-plaintext">http://raspberryip:3000
 Default username admin, default password admin.
 Cambiare password al primo accesso
 NEW PASS visualizzadati
-</pre>
+</code></pre>
 
 <h3>Mosquitto MQTT</h3>
 Mosquitto è il server che raccoglierà i dati inviati da Arduino. E' in ascolto sulla porta 1883. Per approfondimenti usa <a href="https://lorenzocasaburo.it/raspberry-pi/installazione-e-configurazione-broker-mqtt-mosquitto/" target="_blank">questo link</a>
 
-<pre>
-sudo apt-get install mosquitto mosquitto-clients
+<pre><code class="language-bash">sudo apt-get install mosquitto mosquitto-clients
 
 sudo systemctl enable mosquitto
 sudo systemctl start mosquitto
-</pre>
+</code></pre>
 
 Abilitiamo Mosquitto a ricevere i dati in maniera anonima:
-<pre>
-sudo systemctl stop mosquitto
+<pre><code class="language-bash">sudo systemctl stop mosquitto
 
 sudo nano /etc/mosquitto/conf.d/access.conf
 listener 1883
 allow_anonymous true
-CTRL+X, Y, invio
+</code></pre>
+<p>CTRL+X, Y, invio</p>
 
-sudo systemctl start mosquitto
-</pre>
+<pre><code class="language-bash">sudo systemctl start mosquitto</code></pre>
 
 Opzionale: vi lascio qui degli esempio per vedere se il vostro server funziona. Lanciare questi comandi in due finestre separate:
-<pre>
-mosquitto_sub -t sensors/temp
+<pre><code class="language-plaintext">mosquitto_sub -t sensors/temp
 mosquitto_pub -t sensors/temp -m 'temperature celsius=20'
-</pre>
+</code></pre>
 
 Opzionale: vi lascio anche uno script bash che genera dei dati random e li invia al server MQTT:
-<pre>
-nano mqtt_pub.sh
-
-#!/bin/bash
+<pre><code class="language-bash">nano mqtt_pub.sh</code></pre>
+<pre><code class="language-bash">#!/bin/bash
 while true
 do
   rand=$(( $(RANDOM % 50 + 1 ))
   mosquitto_pub -t sensors/temp -m 'temperature celsius='${rand}''
   sleep 0.1
 done
+</code></pre>
+<p>CTRL+X, Y, invio</p>
 
-CTRL+X, Y, invio
-
-chmod +x mqtt_pub.sh
+<pre><code class="language-bash">chmod +x mqtt_pub.sh
 ./mqtt_pub.sh
-</pre>
+</code></pre>
 
 <h3>Telegraf</h3>
 Telegraf è un plugin per InfluxDB per scrivere i dati ricevuti dal server MQTT sul database.
-<pre>
-sudo apt-get update
+<pre><code class="language-code">sudo apt-get update
 sudo apt-get install telegraf
-</pre>
+</code></pre>
 
 E' necessario creare un file di configurazione ad hoc per il nostro database. In questo file è fondamentale impostare correttamente i topics, cioè i dati che riceviamo da Arduino.
-<pre>
-sudo mv /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.backup
+<pre><code class="language-bash">sudo mv /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.backup
 sudo nano /etc/telegraf/telegraf.conf
+</code></pre>
 
-# Global Agent Configuration
+<pre><code class="language-bash"># Global Agent Configuration
 [agent]
   hostname = ""
   omit_hostname = false
@@ -305,12 +287,11 @@ sudo nano /etc/telegraf/telegraf.conf
   ## Value supported is int, float, unit
   #   [[inputs.mqtt_consumer.topic.types]]
   #      key = type
-</pre>
+</code></pre>
 
 Infine, abilitare telegraf all'avvio del sistema e avviarlo:
-<pre>
-sudo systemctl enable telegraf
+<pre><code class="language-bash">sudo systemctl enable telegraf
 sudo systemctl start telegraf
-</pre>
+</code></pre>
 
 A questo punto vi basta configurare Grafana per visualizzare i dati salvati nel DB.
