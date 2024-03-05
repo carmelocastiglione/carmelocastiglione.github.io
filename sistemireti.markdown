@@ -71,79 +71,92 @@ permalink: /sistemireti
         <li>UDP</li>
     </ul>
     <h4>Strato applicazione</h4>
-Condivisione di contenuti
-CMS (content management system)
-Wordpress
-Joomla
-Software realizzato internamente (solo se si hanno le competenze)
-Server 
-Suddivisione per sistema operativo	
-Linux (Debian/Ubuntu)
-Windows Server
-Suddivisione per categoria
-HTTP (web): supporto per PHP se serve
-Apache
-Nginx
-Database
-MySQL (relazionale)
-MongoDB (noSQL)
-FTP
-DHCP
-dhcpd
-DNS
-Domain controller
-File server
-Email
-Radius
-Condivisione risorse / autenticazione utenti (domain controller)
-Samba (Linux)
-Active Directory (Windows)
-Sicurezza
-Firewall per DMZ
-Three legged 
-DMZ tra due firewall
-Organizzazione
-Recupero dei dati
-Confidenzialità / riservatezza / integrità / disponibilità
-Crittografia
-Ridondanza hardware
-Backup
-RAID 1/5
-Antivirus o firewall personale
-Accesso utenti autenticati
-Wireless
-Posizionamento Access Point
-Standard WLAN
-802.11n: wifi 4 (300 Mbps, frequenza 2.4 GHz e 5 GHz)
-802.11ac: wifi 5 (500 Mbps o 1Gbps, frequenza 5 GHz)
-802.11ax: wifi 6 (fino a 12 GBps, frequenza 2.4 GHz e 5 GHz)
-Crittografia
-WPA2
-Dettagli host
-Client
-Hardware
-Scheda di rete (scegliere una 10/100/1000, scheda Gigabit)
-Scheda video
-Monitor
-Software
-Office automation
-Client software
-Browser
-Server (se si sceglie di realizzare i servizi internamente)
-Hardware
-Alimentazione ridondante
-Multicore
-Abbondanza di RAM
-Numero di dischi
-Software
-Sistema operativo
-Linux (per la maggioranza delle applicazioni)
-Windows (tendenzialmente solo se si usa Active Directory)
-Configurazione in RAID 1/5
-Stampanti di rete
-Server su provider di servizi esterni
-Hosting (server condivisi)
-Housing (server dedicati)
-Cloud computing
-
+    <p>Condivisione di contenuti: </p>
+    <ul>
+        <li>CMS (content management system)</li>
+        <li>Wordpress</li>
+        <li>Joomla</li>
+        <li>Software realizzato internamente (solo se si hanno le competenze)</li>
+    </ul>
+    <h4>Server</h4> 
+    <p>Suddivisione per sistema operativo:</p>
+    <ul>
+        <li>Linux (Debian/Ubuntu)</li>
+        <li>Windows Server</li>
+    </ul>
+    <p>Suddivisione per categoria:</p>
+    <ul>
+        <li>HTTP (web): supporto per PHP se serve. Server più usati: Apache o Nginx</li>
+        <li>Database: MySQL (relazionale) o MongoDB (noSQL)</li>
+        <li>FTP</li>
+        <li>DHCP: dhcpd</li>
+        <li>DNS</li>
+        <li>Domain controller</li>
+        <li>File server</li>
+        <li>Email</li>
+        <li>Radius (AAA)</li>
+    </ul>
+    <p>Condivisione risorse / autenticazione utenti (domain controller):</p>
+    <ul>
+        <li>Samba (Linux)</li>
+        <li>Active Directory (Windows)</li>
+    </ul>
+    <h4>Sicurezza</h4>
+    <p>Firewall per DMZ</p>
+    <ul>
+        <li>Three legged</li>
+        <li>DMZ tra due firewall</li>
+    </ul>
+    <p>Organizzazione</p>
+    <p>Recupero dei dati</p>
+    <p>Confidenzialità / riservatezza / integrità / disponibilità</p>
+    <ul>
+        <li>Crittografia</li>
+        <li>Ridondanza hardware</li>
+        <li>Ridondanza dati: RAID 1/5</li>
+        <li>Backup: strategia 3-2-1</li>  
+        <li>Antivirus o firewall personale</li>
+        <li>Accesso utenti autenticati</li>
+    </ul>
+    <h4>Wireless</h4>
+    <p>Posizionamento Access Point</p>
+    <p>Standard WLAN:</p>
+    <ul>
+        <li>802.11n: wifi 4 (300 Mbps, frequenza 2.4 GHz e 5 GHz)</li>
+        <li>802.11ac: wifi 5 (500 Mbps o 1Gbps, frequenza 5 GHz)</li>
+        <li>802.11ax: wifi 6 (fino a 12 GBps, frequenza 2.4 GHz e 5 GHz)</li>
+    </ul>
+    <p>Crittografia: WPA2/WPA3</p>
+    <h4>Dettagli client</h4>
+    <p>Hardware:</p>
+    <ul>
+        <li>Scheda di rete: scegliere una 10/100/1000 (scheda Gigabit Ethernet)</li>
+        <li>Scheda video solo se necessaria</li>
+        <li>Monitor</li>
+    </ul>
+    <p>Software:</p>
+    <ul>
+        <li>Office automation</li>
+        <li>Client software</li>
+        <li>Browser</li>
+    </ul>
+    <h4>Dettagli server (se si sceglie di realizzare i servizi internamente)</h4>
+    <p>Hardware:</p>
+    <ul>
+        <li>Alimentazione ridondante</li>
+        <li>Multicore</li>
+        <li>Abbondanza di RAM</li>
+        <li>Numero di dischi (Configurazione in RAID 1/5)</li>
+    </ul>
+    <p>Software:</p>
+    <ul>
+        <li>Sistema operativo: Linux (per la maggioranza delle applicazioni) o Windows (tendenzialmente solo se si usa Active Directory)</li>
+    </ul>
+    <h4>Stampanti di rete</h4>
+    <h4>Server su provider di servizi esterni</h4>
+    <ul>
+        <li>Hosting (server condivisi)</li>
+        <li>Housing (server dedicati)</li>
+        <li>Cloud computing</li>
+    </ul>
 </div>
