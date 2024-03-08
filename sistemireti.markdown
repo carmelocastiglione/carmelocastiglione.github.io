@@ -21,7 +21,7 @@ permalink: /sistemireti
     <p>Standard:</p> 
     <ul>
         <li>Gigabit Ethernet (velocità fino a 1 Gbit/s): richiede che tutti gli apparati e i dispositivi di rete supportino tale standard</li>
-        <li>Fastweb Ethernet (velocità fino a 100 Mbit/s)</li>
+        <li>Fast Ethernet (velocità fino a 100 Mbit/s)</li>
     </ul>
     <p>Topologia della rete:</p>
     <ul>
