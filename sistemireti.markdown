@@ -8,14 +8,21 @@ permalink: /sistemireti
     <h1 class="heading">Sistemi e Reti</h1>
     <h2 class="heading">Schema di svolgimento della prova scritta di Sistemi e Reti</h2>
     <h3>Analisi della situazione “as is” (stato attuale)</h3>
-    <p>Formulare tutte le ipotesi che non si evincono dal testo</p>
+    <p>Formulare tutte le ipotesi che non si evincono dal testo. Se rischiesto, realizzare uno schema grafico della rete. In ogni caso sarebbe opportuno fare degli schemi qualitativi della rete attuale e le modifiche da apportare</p>
     <h3>Analisi dello stato “to be” (progetto da realizzare)</h3>
+    <p>Predisporre un progetto di rete che possa tenere in considerazione eventuali espansioni future della rete (numero di device connessi o infrastruttura della rete).</p>
+    <p>Disegnare una rete inserendo tutti gli elementi richiesti, in particolar modo host, switch, router, firewall. Definire le sottoreti con relative subnet mask. Dopo lo schema, scrivere tutte le caratteristiche del progetto.</p>
     <p>Analisi delle peculiarità del progetto:</p>
     <ul>
         <li>Infrastruttura su più piani</li>
         <li>Necessità di utilizzare tecnologie wireless</li>
     </ul>
     <h4>Strato fisico</h4>
+    <p>Standard:</p> 
+    <ul>
+        <li>Gigabit Ethernet (velocità fino a 1 Gbit/s): richiede che tutti gli apparati e i dispositivi di rete supportino tale standard</li>
+        <li>Fastweb Ethernet (velocità fino a 100 Mbit/s)</li>
+    </ul>
     <p>Topologia della rete:</p>
     <ul>
         <li>Bus</li>
@@ -58,8 +65,9 @@ permalink: /sistemireti
         </li>
         <li>Connessione:
             <ul>
-                <li>Dial up (vecchie connessioni analogiche con modem)</li>
-                <li>xDSL (HDSL/ADSL/VDSL): la maggior parte delle linee attuali è su tecnologia VDSL</li>
+                <li>Dial up: vecchie connessioni analogiche con modem (ormai in disuso). Velocità: 56 kbit/s (V.92) fino a 128 kbit/s (ISDN)</li>
+                <li>xDSL (HDSL/ADSL/VDSL): la maggior parte delle linee attuali è su tecnologia VDSL. Tale tecnologia permette di raggiungere tipicamente fino a 300 Mbit/s. Utilizzo della fibra fino alla centralina (FTTC: fiber to the cabinet)</li>
+                <li>Fibra: tecnologia FTTH (fiber to the home)
                 <li>Radio (WiMAX o LTE)</li>
                 <li>Satellite (Starlink)</li>
             </ul>
