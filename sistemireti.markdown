@@ -67,7 +67,7 @@ permalink: /sistemireti
             <ul>
                 <li>Dial up: vecchie connessioni analogiche con modem (ormai in disuso). Velocità: 56 kbit/s (V.92) fino a 128 kbit/s (ISDN)</li>
                 <li>xDSL (HDSL/ADSL/VDSL): la maggior parte delle linee attuali è su tecnologia VDSL. Tale tecnologia permette di raggiungere tipicamente fino a 300 Mbit/s. Utilizzo della fibra fino alla centralina (FTTC: fiber to the cabinet)</li>
-                <li>Fibra: tecnologia FTTH (fiber to the home)
+                <li>Fibra: tecnologia FTTH (fiber to the home)</li>
                 <li>Radio (WiMAX o LTE)</li>
                 <li>Satellite (Starlink)</li>
             </ul>
