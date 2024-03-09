@@ -26,7 +26,7 @@ permalink: /sistemireti
     <p>Topologia della rete:</p>
     <ul>
         <li>Bus</li>
-        <li><b>Stella (molto probabilmente è questa la topologia)</b></li>
+        <li><u>Stella (molto probabilmente è questa la topologia)</u></li>
         <li>Anello</li>
         <li>Maglia</li>
     </ul>
@@ -41,12 +41,17 @@ permalink: /sistemireti
     <ul>
         <li>Uso di switch / access point per wireless</li>
         <li>Uso di VPN (più sedi)</li>
-        <li>Subnetting: controllare che il numero dei bit riservati agli host sia sufficiente anche per implementazioni future. Scegliere gli indirizzi IP statici (sicuramente se è presente un server) o dinamici (in questo caso, consigurare un server DHCP con inizio e fine blocco indirizzi IP da assegnare). Configurare per ogni client:
+        <li>Subnetting: controllare che il numero dei bit riservati agli host sia sufficiente anche per implementazioni future. Scegliere gli indirizzi IP statici (sicuramente se è presente un server, preferire IP statici se si realizzano postazioni fisse la cui disposizione non cambia nel tempo) o dinamici (necessariamente quando si sceglie di utilizzare connessioni Wifi. In questo caso, consigurare un server DHCP con inizio e fine blocco indirizzi IP da assegnare e un lease time). Configurare per ogni client:
             <ul>
                 <li>Indirizzo IP</li>
                 <li>Gateway</li>
                 <li>Eventuale DNS</li>
             </ul>
+        Ipotizzare gli sviluppi e i possibili ampliamenti della rete, si hanno due possibilità:
+            <ul>
+                <li>Resubnetting: si modificano le maschere di rete. Ogni bit aggiunto ai bit della sottorete raddoppia il numero degli indirizzi IP assegnabili ad una sottorete (da una rete /24 ad una /25 si passa da 254 a 510 host). Costo zero, bisogna riconfigurare i dispositivi</li> 
+                <li>Si aggiunge un'altra sottorete tra quelle disponibili: ad esempio se si ha una rete /24 se ne aggiunge un'altra. Necessità di acquistare hardware aggiuntivo (uno switch e un router)</li>
+            </ul> 
         </li>
     </ul>
     <h4>Strato rete</h4>
@@ -55,7 +60,7 @@ permalink: /sistemireti
     <ul>
         <li>Indirizzo pubblico all’interfaccia esterna del router: può essere statico (se è presente un server all'interno della rete) o dinamico</li>
         <li>Implementazione del NAT (Network Address Translation)</li>
-        <li>Apertura delle porte necessarie:
+        <li>Apertura delle porte necessarie (port forwarding):
             <ul>
                 <li>http (web): TCP 80</li>
                 <li>https (web): TCP 443</li>
@@ -66,8 +71,8 @@ permalink: /sistemireti
         <li>Connessione:
             <ul>
                 <li>Dial up: vecchie connessioni analogiche con modem (ormai in disuso). Velocità: 56 kbit/s (V.92) fino a 128 kbit/s (ISDN)</li>
-                <li>xDSL (HDSL/ADSL/VDSL): la maggior parte delle linee attuali è su tecnologia VDSL. Tale tecnologia permette di raggiungere tipicamente fino a 300 Mbit/s. Utilizzo della fibra fino alla centralina (FTTC: fiber to the cabinet)</li>
-                <li>Fibra: tecnologia FTTH (fiber to the home)</li>
+                <li>xDSL (HDSL/ADSL/VDSL): caratterizzate da velocità in download maggiore rispetto all'upload. La maggior parte delle linee attuali è su tecnologia VDSL. Tale tecnologia permette di raggiungere tipicamente fino a 300 Mbit/s in download. Utilizzo della fibra fino alla centralina (FTTC: fiber to the cabinet). Le vecchie ADSL raggiungono tipicamente i 20 Mbit/s in download.</li>
+                <li>Fibra: tecnologia FTTH (fiber to the home). Velocità in download fino a 1 Gbit/s. E' la tecnologia più veloce e più costosa.</li>
                 <li>Radio (WiMAX o LTE)</li>
                 <li>Satellite (Starlink)</li>
             </ul>
@@ -110,9 +115,9 @@ permalink: /sistemireti
         <li>Active Directory (Windows)</li>
     </ul>
     <h4>Sicurezza</h4>
-    <p>Firewall per DMZ</p>
+    <p>Firewall per DMZ: i server all'interno di una LAN che sono accessibili dall'esterno devono essere posti in una zona riservata e isolata dal resto della rete in modo da non avere ripercussioni in caso di attacco ai server.</p>
     <ul>
-        <li>Three legged</li>
+        <li>Three legged: tre interfacce ethernet (LAN, WAN, DMZ)</li>
         <li>DMZ tra due firewall</li>
     </ul>
     <p>Organizzazione</p>
@@ -120,7 +125,8 @@ permalink: /sistemireti
     <p>Confidenzialità / riservatezza / integrità / disponibilità</p>
     <ul>
         <li>Crittografia</li>
-        <li>Ridondanza hardware</li>
+        <li>Ridondanza hardware: ad esempio doppia alimentazione</li>
+        <li>Ridondanza connessione Internet: router dual WAN oppure con modem 4G/5G integrato</li>
         <li>Ridondanza dati: RAID 1/5</li>
         <li>Backup: strategia 3-2-1</li>  
         <li>Antivirus o firewall personale</li>
@@ -135,6 +141,11 @@ permalink: /sistemireti
         <li>802.11ax: wifi 6 (fino a 12 GBps, frequenza 2.4 GHz e 5 GHz)</li>
     </ul>
     <p>Crittografia: WPA2/WPA3</p>
+    <p>Autenticazione</p>
+    <ul>
+        <li>Password condivisa: per piccole reti. Possibilità di realizzare un filtro sul MAC address in modo da autorizzare solamente i device registrati</li>
+        <li>Utilizzo di un server Radius (AAA) per accesso, autenticazione e autorizzazione, con username e password per ogni utente</li>
+    </ul>
     <h4>Dettagli client</h4>
     <p>Hardware:</p>
     <ul>
