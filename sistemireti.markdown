@@ -7,6 +7,7 @@ permalink: /sistemireti
 <div class="container">
     <h1 class="heading">Sistemi e Reti</h1>
     <h2 class="heading">Schema di svolgimento della prova scritta di Sistemi e Reti</h2>
+    <p>Ultima modifica a questa pagina: {{ "now" | date: "%d/%m/%Y alle %H:%M" }}</p>
     <h3>Analisi della situazione “as is” (stato attuale)</h3>
     <p>Formulare tutte le ipotesi che non si evincono dal testo. Se rischiesto, realizzare uno schema grafico della rete. In ogni caso sarebbe opportuno fare degli schemi qualitativi della rete attuale e le modifiche da apportare</p>
     <h3>Analisi dello stato “to be” (progetto da realizzare)</h3>
@@ -86,9 +87,7 @@ permalink: /sistemireti
     <h4>Strato applicazione</h4>
     <p>Condivisione di contenuti: </p>
     <ul>
-        <li>CMS (content management system)</li>
-        <li>Wordpress</li>
-        <li>Joomla</li>
+        <li>CMS (content management system): i più famosi sono Wordpress o Joomla. Soluzione software già pronta, open source, a costo zero. Richiede solo di essere installata su un web server e configurata.</li>
         <li>Software realizzato internamente (solo se si hanno le competenze)</li>
     </ul>
     <h4>Server</h4> 
@@ -101,12 +100,12 @@ permalink: /sistemireti
     <ul>
         <li>HTTP (web): supporto per PHP se serve. Server più usati: Apache o Nginx</li>
         <li>Database: MySQL (relazionale) o MongoDB (noSQL)</li>
-        <li>FTP</li>
+        <li>FTP: servirà a caricare i file sul server. Alternativa: soluzione CI/CD (Continous Integration / Continous Delivery). Quest'ultima è una soluzione avanzata, richiede conoscenze di DevOps</li>
         <li>DHCP: dhcpd</li>
         <li>DNS</li>
         <li>Domain controller</li>
         <li>File server</li>
-        <li>Email</li>
+        <li>Email: Postfix come server MTA</li>
         <li>Radius (AAA)</li>
     </ul>
     <p>Condivisione risorse / autenticazione utenti (domain controller):</p>
@@ -121,11 +120,13 @@ permalink: /sistemireti
         <li>DMZ tra due firewall</li>
     </ul>
     <p>Organizzazione</p>
-    <p>Recupero dei dati</p>
+    <p>Protezione fisica: locale server climatizzato e con accesso protetto</p>
+    <p>Recupero dei dati (disaster recovery)</p>
     <p>Confidenzialità / riservatezza / integrità / disponibilità</p>
     <ul>
         <li>Crittografia</li>
         <li>Ridondanza hardware: ad esempio doppia alimentazione</li>
+        <li>Gruppo di continuità</li>
         <li>Ridondanza connessione Internet: router dual WAN oppure con modem 4G/5G integrato</li>
         <li>Ridondanza dati: RAID 1/5</li>
         <li>Backup: strategia 3-2-1</li>  
@@ -162,20 +163,28 @@ permalink: /sistemireti
     <h4>Dettagli server (se si sceglie di realizzare i servizi internamente)</h4>
     <p>Hardware:</p>
     <ul>
-        <li>Alimentazione ridondante</li>
-        <li>Multicore</li>
-        <li>Abbondanza di RAM</li>
-        <li>Numero di dischi (Configurazione in RAID 1/5)</li>
+        <li>Da posizionare in un rack</li>
+        <li>Alimentazione ridondante (dual)</li>
+        <li>Processore multicore (esempio: Intel Xeon Silver/Gold/Platinum da 8 core / 16 thread fino a 32 core / 64 thread, in configurazione single o multiple socket)</li>
+        <li>Abbondanza di RAM (16/32/64 GB)</li>
+        <li>2 dischi per RAID 1 o 3 dischi per RAID 5, solitamente SSD</li>
+        <li>Scheda di rete 10 o 100 Gbit/s</li>
     </ul>
     <p>Software:</p>
     <ul>
-        <li>Sistema operativo: Linux (per la maggioranza delle applicazioni) o Windows (tendenzialmente solo se si usa Active Directory)</li>
+        <li>Sistema operativo: Linux (per la maggioranza delle applicazioni) o Windows (tendenzialmente solo se si usa Active Directory). Disto consigliate: Debian, Red Hat, Ubuntu Server</li>
+        <li>PhpMyAdmin: gestion database MySQL</li>
     </ul>
     <h4>Stampanti di rete</h4>
     <h4>Server su provider di servizi esterni</h4>
+    <p>Quando non si hanno le risorse necessarie a realizzare il servizio internamente, è necessario rivolgersi ad un'azienda esterna</p>
     <ul>
         <li>Hosting (server condivisi)</li>
         <li>Housing (server dedicati)</li>
         <li>Cloud computing</li>
     </ul>
+    <h3>Teoria</h3>
+    <p>Sicuramente saranno presenti domande relative agli argomenti teorici trattati durante il corso dell'ultimo anno. Nulla di cui preoccuparsi, il programma di quinta dovrebbe coprire tutte le possibili domande.</p>
+    <h3>Informatica</h3>
+    <p>Probabilmente sarà presente all'interno della traccia una parte riguardante il programma di Informatica di quinta, con la progettazione del modello E/R di una parte della base dati e relative tabelle. Vi potrebbero inoltre essere chieste parti significative di codice PHP per la gestione di qualche caso d'uso relativo a tale base di dati.</p>
 </div>
