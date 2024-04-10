@@ -16,6 +16,12 @@ permalink: /programmazione
   {% endfor %}
   <h2>CSS</h2>
   <h2>C</h2>
+  | 
+  {% for tutorial in site.c %}
+      <a href="{{ tutorial.url }}">
+        {{ tutorial.title }}
+      </a> |
+  {% endfor %}
   <h2>C++</h2>
   <h2>Java</h2>
   <h2>SQL</h2>
