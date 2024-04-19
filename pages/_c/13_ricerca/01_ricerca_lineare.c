@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 // Imposta questi parametri a piacere
 #define ARRAY_LENGTH 10
@@ -49,10 +48,8 @@ void printArray(int array[], int size) {
 // Ricerca un numero n in un vettore array di dimensione size
 // Ritorna la posizione del primo elemento trovato, o -1 se non trova nulla
 int linearSearch(int array[], int size, int n) {
-    bool found = false;
     for (int i = 0; i < size; i++) {
         if (array[i] == n) {
-            found = true;
             return i;
         }
     }
