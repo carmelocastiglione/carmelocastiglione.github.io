@@ -6,6 +6,8 @@ typedef struct s_node {
     struct s_node * next; // puntatore al prossimo elemento
 } node;
 
+void print(node * head);
+
 int main() {
     // Definisco la testa della lista
     node * head = NULL;
@@ -30,8 +32,16 @@ int main() {
     head->next = elem;
 
     // Stampo la lista
-    printf("%d ", head->val);
-    printf("%d", head->next->val);
+    print(head);
 
     return 0;
+}
+
+void print(node * head) {
+    node * current = head;
+
+    while (current != NULL) {
+        printf("%d\n", current->val);
+        current = current->next;
+    }
 }
