@@ -11,9 +11,9 @@ void print(node * head);
 
 int main() {
     node * head = NULL;
+    head = addNodeToEnd(head, 1);
     head = addNodeToEnd(head, 2);
     head = addNodeToEnd(head, 3);
-    head = addNodeToEnd(head, 7);
 
     // Stampo la lista
     print(head);

@@ -7,6 +7,7 @@ typedef struct s_node {
 } node;
 
 node * addNodeToStart(node * head, int val);
+node * removeNodeFromStart(node * head);
 void print(node * head);
 
 int main() {
@@ -14,6 +15,7 @@ int main() {
     head = addNodeToStart(head, 1);
     head = addNodeToStart(head, 2);
     head = addNodeToStart(head, 3);
+    head = removeNodeFromStart(head);
 
     // Stampo la lista
     print(head);
@@ -22,11 +24,25 @@ int main() {
 }
 
 /*
-    Inserimento in testa:
-    1: creo un nuovo nodo
-    2: collego il primo elemento della lista come prossimo elemento del nuovo nodo
-    3: assegno la testa della lista al nuovo elemento
+    Rimozione dalla testa:
+    1: salvo il nodo successivo al nodo in testa
+    2: libero la testa
+    3: assegno come testa l'elemento salvato precedentemente
 */ 
+
+node * removeNodeFromStart(node * head) {
+    node * next_node = NULL;
+
+    if (head == NULL) {
+        return NULL;
+    }
+
+    next_node = head->next;
+    free(head);
+    head = next_node;
+
+    return head;
+}
 
 node * addNodeToStart(node * head, int val) {
     node * new_node;
