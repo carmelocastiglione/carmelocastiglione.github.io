@@ -31,6 +31,10 @@ int main() {
 */ 
 
 node * removeNodeFromEnd(node * head) {
+    // se la lista è vuota, ritorno NULL 
+    if (head == NULL) {
+        return NULL;
+    }
     // se c'è un solo elemento nella lista, lo elimino
     if (head->next == NULL) {
         free(head);
