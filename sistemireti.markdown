@@ -17,12 +17,15 @@ permalink: /sistemireti
     <ul>
         <li>Infrastruttura su più piani</li>
         <li>Necessità di utilizzare tecnologie wireless</li>
+        <li>Utilizzo di schede per acquisire dati dai sensori</li>
     </ul>
     <h4>Strato fisico</h4>
     <p>Standard:</p> 
     <ul>
-        <li>Gigabit Ethernet (velocità fino a 1 Gbit/s): richiede che tutti gli apparati e i dispositivi di rete supportino tale standard</li>
-        <li>Fast Ethernet (velocità fino a 100 Mbit/s)</li>
+        <li>Ethernet (velocità fino a 10 Mbit/s). Standard 10BASE-T</li> 
+        <li>Fast Ethernet (velocità fino a 100 Mbit/s). Standard 100BASE-TX</li>
+        <li>Gigabit Ethernet (velocità fino a 1 Gbit/s). Standard 1000BASE-TX: richiede che tutti gli apparati e i dispositivi di rete supportino tale standard. Ad oggi è lo standard più utilizzato</li>
+        <li>Fibra. Standard 1000BASE-LX o 1000BASE-SX. Supporta distanze fino a 5km.</li>
     </ul>
     <p>Topologia della rete:</p>
     <ul>
@@ -31,12 +34,20 @@ permalink: /sistemireti
         <li>Anello</li>
         <li>Maglia</li>
     </ul>
-    <p>Cablaggio strutturato: tipologia di cavi</p>
+    <p>Tipologia di cavi</p>
+    Per distanze inferiori a 100 metri si usano cavi in rame UTP. Utilizzare da CAT5E in su:
     <ul>
-        <li>CAT5</li>
-        <li>CAT5E</li>
-        <li>CAT6</li>
-        <li>CAT7</li>
+        <li>CAT5: fino a 100 Mb/s</li>
+        <li>CAT5E: fino a 1 Gb/s</li>
+        <li>CAT6: fino a 1 Gb/s</li>
+        <li>CAT7: fino a 10 Gb/s</li>
+    </ul>
+    Per distanze superiori si utilizza la fibra
+    <p>Cablaggio strutturato</p>
+    <ul>
+        <li>Dorsale in fibra</li>
+        <li>Cablaggio verticale con armadi ripartitori</li>
+        <li>Cablaggio orizzontale per piano</li>
     </ul>
     <h4>Strato collegamento</h4>
     <ul>
@@ -47,6 +58,12 @@ permalink: /sistemireti
                 <li>Indirizzo IP</li>
                 <li>Gateway</li>
                 <li>Eventuale DNS</li>
+            </ul>
+        Scegliere un range di indirizzi privati tra i seguenti:
+            <ul>
+                <li>Classe A: da 10.0.0.0 a 10.255.255.255. Si hanno 24 bit a disposizione per subnet e host</li>
+                <li>Classe B: da 172.16.0.0 a 172.31.255.255. Si hanno 20 bit a disposizione per subnet e host</li>
+                <li>Classe C: da 192.168.0.0 a 192.168.255.255. Si hanno 16 bit a disposizione per subnet e host</li>
             </ul>
         Ipotizzare gli sviluppi e i possibili ampliamenti della rete, si hanno due possibilità:
             <ul>
