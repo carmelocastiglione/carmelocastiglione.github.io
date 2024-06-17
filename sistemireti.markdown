@@ -197,8 +197,15 @@ permalink: /sistemireti
     <p>Quando non si hanno le risorse necessarie a realizzare il servizio internamente, è necessario rivolgersi ad un'azienda esterna</p>
     <ul>
         <li>Hosting (server condivisi)</li>
+        <li>Virtual Private Server (VPS)</li>
         <li>Housing (server dedicati)</li>
-        <li>Cloud computing</li>
+        <li>Cloud hosting</li>
+    </ul>
+    <h4>Cloud computing</h4>
+    <ul>
+        <li>IAAS (AWS, Microsoft Azure e Google Cloud)</li>
+        <li>PAAS (AWS Elastic Beanstalk, Heroku e Red Hat OpenShift)</li>
+        <li>SAAS (Dropbox, Salesforce, Google Apps e Red Hat Insights)</li>
     </ul>
     <h3>Teoria</h3>
     <p>Sicuramente saranno presenti domande relative agli argomenti teorici trattati durante il corso dell'ultimo anno. Nulla di cui preoccuparsi, il programma di quinta dovrebbe coprire tutte le possibili domande.</p>
