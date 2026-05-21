@@ -548,26 +548,309 @@ Qui potete trovare una lista di domande che coprono i principali argomenti affro
 
 ### PHP e accesso ai dati
 
-1. A cosa serve PHP in un'applicazione web?
-2. Come avviene il passaggio di parametri tramite form?
-3. Differenza tra metodo GET e POST.
-4. Perchè POST è generalmente preferibile nei login?
-5. Come realizzeresti un sistema di login sicuro?
-6. Dove vengono generalmente salvate le password? In che forma?
-7. Perchè non bisogna salvare le password in chiaro?
-8. Spiega il concetto di sessione.
-9. Come si collega PHP a un database MySQL?
-10. Quali controlli è importante effettuare sui dati inseriti dagli utenti?
-11. Che cos'è una SQL Injection? Come si previene?
-12. Descrivi il flusso completo di autenticazione di un utente in un sito web.
+1. **A cosa serve PHP in un'applicazione web?**
+   - *Sottoquesiti:*
+     - PHP è lato client o server?
+     - Quali operazioni permette di fare?
+     - Come comunica PHP con il browser?
+     - Cosa può fare PHP che JavaScript non può?
+     - Come si integra PHP con HTML e database?
+   - *Suggerimenti per rispondere:*
+     - PHP è server-side: elabora sul server, manda risultati al browser
+     - Permette di generare HTML dinamicamente
+     - Accede al database in modo sicuro (client non ha accesso)
+     - Esempi: login, caricamento dati dal database, elaborazioni complesse
+   - *Concetti chiave:* PHP, server-side, dinamico, database, sicurezza
+
+2. **Come avviene il passaggio di parametri tramite form?**
+   - *Sottoquesiti:*
+     - Come inoltra il form i dati al server?
+     - Dove finiscono i parametri nel metodo GET?
+     - Come accedo ai parametri in PHP?
+     - Quale è la differenza tra $_GET e $_POST in PHP?
+     - Come proteggi i parametri da manipolazione?
+   - *Suggerimenti per rispondere:*
+     - Form invia dati via GET o POST
+     - GET: parametri visibili in URL
+     - POST: parametri nel corpo della richiesta (nascosti)
+     - In PHP: $_GET['nomeparametro'], $_POST['nomeparametro']
+     - Valida sempre i parametri lato server
+   - *Concetti chiave:* form, parametri, GET, POST, $_GET, $_POST, validazione
+
+3. **Differenza tra metodo GET e POST.**
+   - *Sottoquesiti:*
+     - Come appaiono i dati in GET?
+     - Come appaiono i dati in POST?
+     - Quale è il limite di dimensione per GET?
+     - Quale è il limite per POST?
+     - Quale è più sicuro? Perchè?
+   - *Suggerimenti per rispondere:*
+     - GET: parametri nella URL (visibili, max ~2000 caratteri)
+     - POST: parametri nel corpo (nascosti, limite molto più grande)
+     - GET usato per ricerche, link navigazione
+     - POST usato per login, dati sensibili, file upload
+   - *Concetti chiave:* GET, POST, URL, corpo richiesta, visibilità , sicurezza
+
+4. **Perchè POST è generalmente preferibile nei login?**
+   - *Sottoquesiti:*
+     - Cosa accadrebbe se usassi GET per il login?
+     - La password apparirebbe dove?
+     - Come potrebbe essere compromessa?
+     - Oltre alla visibilità , quali altri rischi?
+     - Quali dati sensibili vanno sempre in POST?
+   - *Suggerimenti per rispondere:*
+     - Con GET, username e password sarebbero nella URL (visibili)
+     - Nel browser history, nei log del server, nei proxy
+     - POST nasconde i dati (non è comunque "sicuro" senza HTTPS)
+     - Con HTTPS, POST è crittografato
+   - *Concetti chiave:* POST, sicurezza, password, URL, visibilità , HTTPS
+
+5. **Come realizzeresti un sistema di login sicuro?**
+   - *Sottoquesiti:*
+     - Quali passaggi include un login?
+     - Come verifichi la password?
+     - Come gestisci i tentativi falliti?
+     - Come proteggi da attacchi brute force?
+     - Quale è il ruolo del salt in password hashing?
+   - *Suggerimenti per rispondere:*
+     - Usa POST + HTTPS
+     - Non confrontare mai password in chiaro
+     - Confronta hash della password inserita con hash memorizzato
+     - Limita i tentativi falliti (es: 3 tentativi = blocco 10 minuti)
+     - Usa salt + hashing (bcrypt, Argon2)
+   - *Concetti chiave:* login, hashing, salt, bcrypt, brute force, rate limiting
+
+6. **Dove vengono generalmente salvate le password? In che forma?**
+   - *Sottoquesiti:*
+     - Dove sono salvate le password dei tuoi account?
+     - Come sono codificate nel database?
+     - Cosa è l'hashing?
+     - Qual è la differenza tra hashing e crittografia?
+     - Se qualcuno accede al database, cosa vede?
+   - *Suggerimenti per rispondere:*
+     - Salvate nel database della tabella utenti
+     - NON in chiaro (mai!)
+     - Salvate come hash (MD5, SHA, bcrypt, Argon2)
+     - Hashing è one-way (non reversibile)
+     - Con salt: ogni password ha un hash diverso anche se uguale
+   - *Concetti chiave:* password, database, hash, MD5, bcrypt, Argon2, salt
+
+7. **Perchè non bisogna salvare le password in chiaro?**
+   - *Sottoquesiti:*
+     - Quali rischi comporta salvare password in chiaro?
+     - Se il database è hackerato, cosa potrebbe succedere?
+     - Come si proteggono gli utenti con hashing?
+     - L'hashing è completamente sicuro? Conosci vulnerabilità ?
+     - Che cos'è un rainbow table?
+   - *Suggerimenti per rispondere:*
+     - Password in chiaro = accesso diretto a tutti gli account
+     - Hacker accede al database, tutti gli account sono compromessi
+     - Con hashing, anche con accesso al database, non recupera password
+     - MD5/SHA sono vulnerabili a rainbow table (database di hash precalcolati)
+     - bcrypt/Argon2 più lenti, resistono meglio
+   - *Concetti chiave:* password, hashing, sicurezza, rainbow table, bcrypt
+
+8. **Spiega il concetto di sessione.**
+   - *Sottoquesiti:*
+     - Cos'è una sessione in PHP?
+     - Come si crea una sessione? (session_start())
+     - Come si memorizzano dati nella sessione?
+     - Quanto dura una sessione?
+     - Come termina una sessione?
+   - *Suggerimenti per rispondere:*
+     - Sessione = spazio di memoria lato server per quell'utente
+     - Contiene dati che persistono tra le pagine (esempio: IDutente loggato)
+     - Identificata da un cookie con session ID
+     - Dura fintanto che l'utente sta navigando (poi scade)
+     - session_start() crea/resume sessione, $_SESSION accede ai dati
+   - *Concetti chiave:* sessione, $_SESSION, cookie, session_start(), persistenza
+
+9. **Come si collega PHP a un database MySQL?**
+   - *Sottoquesiti:*
+     - Quali librerie/extension conosci per connessione MySQL?
+     - Quali sono i parametri di connessione?
+     - Come gestisci un errore di connessione?
+     - Cosa è una prepared statement e perchè usarla?
+     - Come proteggi da SQL injection?
+   - *Suggerimenti per rispondere:*
+     - mysqli o PDO (meglio PDO, più flessibile)
+     - Parametri: host, user, password, database name
+     - Connessione con try/catch per gestire errori
+     - Prepared statement: usa ? o :parametro per valori
+     - Parametrizzazione = protezione da SQL injection
+   - *Concetti chiave:* mysqli, PDO, connessione, prepared statement, SQL injection
+
+10. **Quali controlli è importante effettuare sui dati inseriti dagli utenti?**
+    - *Sottoquesiti:*
+      - Perchè validare sempre lato server?
+      - Cosa è una validazione? (formato, lunghezza, tipo)
+      - Cosa è una sanitizzazione? (rimozione caratteri pericolosi)
+      - Come validi un email?
+      - Come eviti XSS dai dati utente?
+    - *Suggerimenti per rispondere:*
+      - Validazione server è obbligatoria (client-side è solo per UX)
+      - Lunghezza: username tra 3-20 caratteri
+      - Tipo: email deve avere @, numero deve essere numerico
+      - Email: filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)
+      - XSS: usa htmlspecialchars() quando stampi dati user
+    - *Concetti chiave:* validazione, sanitizzazione, FILTER_VALIDATE, htmlspecialchars, XSS
+
+11. **Che cos'è una SQL Injection? Come si previene?**
+    - *Sottoquesiti:*
+      - Come avviene un attacco di SQL injection?
+      - Fai un esempio di codice vulnerabile
+      - Come si manifesta? (cosa accede l'attaccante?)
+      - Come si previene?
+      - Cosa sono le prepared statement?
+    - *Suggerimenti per rispondere:*
+      - Attaccante inserisce codice SQL nel campo input
+      - Esempio: login: ' OR '1'='1 (bypasssa il login)
+      - Risultato: accesso senza password o estrazione dati
+      - Prevenzione: prepared statement con parametri, non concatenare stringhe
+      - Esempio: SELECT * FROM Utenti WHERE Email = ? (il ? viene sostituito in sicurezza)
+    - *Concetti chiave:* SQL injection, attacco, prevenzione, prepared statement, parametri
+
+12. **Descrivi il flusso completo di autenticazione di un utente in un sito web.**
+    - *Sottoquesiti:*
+      - Quali pagine/azioni sono coinvolte?
+      - Come inizia il processo (form login)?
+      - Cosa succede quando l'utente invia le credenziali?
+      - Come si crea la sessione?
+      - Come sa il server che l'utente è loggato nelle pagine successive?
+      - Come termina il login (logout)?
+    - *Suggerimenti per rispondere:*
+        1. Utente apre pagina login.php, vede form
+        2. Inserisce email e password, clicca "Accedi"
+        3. Form invia POST a verifica.php
+        4. verifica.php legge $_POST, valida dati
+        5. Confronta password hash con database
+        6. Se corretto: session_start(), $_SESSION['IDutente'] = $id
+        7. Reindirizza a dashboard.php
+        8. dashboard.php controlla if($_SESSION['IDutente']) per verificare login
+        9. Logout: session_destroy()
+    - *Concetti chiave:* login, POST, session, hash, validazione, logout, sicurezza
 
 ### Domande trasversali e di collegamento
 
-1. Collega il concetto di integrità  dei dati alla sicurezza informatica.
-2. Qual è il legame tra progettazione corretta e prestazioni del database?
-3. In un e-commerce, quali tabelle considereresti fondamentali?
-4. Quali problematiche emergono quando molti utenti accedono contemporaneamente a un database?
-5. Perchè il linguaggio tecnico è importante nel lavoro informatico?
-6. Quali competenze pratiche ritieni più importanti tra quelle affrontate durante l'anno?
-7. Se dovessi progettare oggi un social network semplificato, quali entità  e funzionalità  considereresti indispensabili?
-8. Quale argomento del programma ritieni più importante per il mondo del lavoro? Motiva la risposta.
+1. **Collega il concetto di integrità dei dati alla sicurezza informatica.**
+   - *Sottoquesiti:*
+     - Cosa significa "integrità dei dati"?
+     - Come si collega l'integrità alla sicurezza?
+     - Quali attacchi compromettono l'integrità?
+     - Come la progettazione del database protegge l'integrità?
+     - Quale è il ruolo dei vincoli di integrità referenziale?
+   - *Suggerimenti per rispondere:*
+     - Integrità = dati sono corretti, completi, coerenti
+     - Dati integri = dati sicuri (manipolazione è difficile)
+     - Attacchi SQL injection, XSS cercano di corrompere i dati
+     - Vincoli, hashing, validazione proteggono l'integrità
+   - *Concetti chiave:* integrità, coerenza, validazione, vincoli, attacchi, sicurezza
+
+2. **Qual è il legame tra progettazione corretta e prestazioni del database?**
+   - *Sottoquesiti:*
+     - Come una cattiva progettazione rallenta il database?
+     - Che effetto ha la normalizzazione sulle prestazioni?
+     - Quali query sono "costose" e perchè?
+     - Come gli indici migliorano le prestazioni?
+     - Quando è meglio denormalizzare per velocità?
+   - *Suggerimenti per rispondere:*
+     - Progettazione corretta = struttura logica che il database "capisce"
+     - Troppe JOIN = query lenta (rischio di normalizzazione eccessiva)
+     - Pochi indici = ricerca lenta; troppi indici = inserimento lento
+     - Tavola ammazzata = soluzione ottimale è un compromesso
+   - *Concetti chiave:* progettazione, query optimization, indici, JOIN, trade-off performance
+
+3. **In un e-commerce, quali tabelle considereresti fondamentali?**
+   - *Sottoquesiti:*
+     - Quali entità di un e-commerce?
+     - Quali informazioni su clienti, prodotti, ordini?
+     - Come colleghi prodotti a ordini?
+     - Come gestisci i pagamenti?
+     - Come gestisci le spedizioni?
+     - Come modelleresti le recensioni?
+   - *Suggerimenti per rispondere:*
+     - Tabelle essenziali: Utente, Prodotto, Ordine, LineeOrdine, Pagamento
+     - Utente: IDutente, Nome, Email, Password, Indirizzo
+     - Prodotto: IDprodotto, Nome, Descrizione, Prezzo, Disponibilità
+     - Ordine: IDordine, IDutente, DataOrdine, Stato
+     - LineeOrdine: IDlinea, IDordine, IDprodotto, Quantità, Prezzo
+     - Opzionali: Categoria, Recensione, Coupon, Magazzino
+   - *Concetti chiave:* e-commerce, entità, associazione N:M, tabella di giunzione
+
+4. **Quali problematiche emergono quando molti utenti accedono contemporaneamente a un database?**
+   - *Sottoquesiti:*
+     - Cosa è la concorrenza in un database?
+     - Quali problemi causano accessi simultanei?
+     - Cosa è una deadlock?
+     - Cosa è la race condition?
+     - Come se ne proteggono i dati?
+   - *Suggerimenti per rispondere:*
+     - Concorrenza = tanti utenti modificano i dati simultaneamente
+     - Problemi: aggiornamenti persi, letture incoerenti, deadlock
+     - Deadlock: due transazioni si bloccano aspettando l'una l'altra
+     - Race condition: due utenti modificano lo stesso record senza sincronizzazione
+     - Protezione: lock, transazioni, isolamento
+   - *Concetti chiave:* concorrenza, deadlock, race condition, lock, transazione, isolamento
+
+5. **Perchè il linguaggio tecnico è importante nel lavoro informatico?**
+   - *Sottoquesiti:*
+     - Quali problemi causa un linguaggio ambiguo?
+     - Chi comunica con chi nel progetto informatico?
+     - Come si evitano malintesi tra team?
+     - Quale è il ruolo della documentazione?
+     - Come il linguaggio facilita la comunicazione internazionale?
+   - *Suggerimenti per rispondere:*
+     - Linguaggio impreciso = capire diversamente = codice sbagliato
+     - Team: sviluppatori, designer, progettisti, clienti
+     - Linguaggio comune = flussi di lavoro efficienti
+     - Documentazione tecnica: API, schema database, regole di business
+     - Standard internazionali permettono di lavorare in qualunque paese
+   - *Concetti chiave:* comunicazione, documentazione, chiarezza, standard, team
+
+6. **Quali competenze pratiche ritieni più importanti tra quelle affrontate durante l'anno?**
+   - *Sottoquesiti:*
+     - Quali sono le competenze "fondamentali"?
+     - Quali sono le competenze "complementari"?
+     - Quale competenza sfruttaresti più nel mondo del lavoro?
+     - Come si collegano le varie competenze?
+     - Quale aspetto non è stato approfondito abbastanza?
+   - *Suggerimenti per rispondere:*
+     - Fondamentali: progettazione E/R, SQL, normalizzazione
+     - Importanti: sicurezza, validazione, performance
+     - Pratiche: saper leggere un database, scrivere query, debuggare
+     - Collegamento: schema DB > tabelle > query > applicazione web
+     - Continua formazione: nuove tecnologie, framework, cloud
+   - *Concetti chiave:* competenza, pratica, ricerca, continuo apprendimento, specializzazione
+
+7. **Se dovessi progettare oggi un social network semplificato, quali entità e funzionalità considereresti indispensabili?**
+   - *Sottoquesiti:*
+     - Quali entità principali avrebbe il social?
+     - Quali attributi per ogni entità?
+     - Come modelleresti i "mi piace"?
+     - Come modelleresti i commenti?
+     - Come modelleresti i "seguaci"?
+     - Quali funzionalità di ricerca?
+   - *Suggerimenti per rispondere:*
+     - Entità: Utente, Post, Commento, Like, Follow, Messaggio
+     - Utente: IDutente, Nome, Bio, FotoProfiloID, DataIscrizione
+     - Post: IDpost, IDutente, Contenuto, DataPost, Visibilità
+     - Like: IDlike, IDutente, IDpost, DataLike (N:M tra Utente e Post)
+     - Follow: IDfollow, IDutente1, IDutente2 (relazione con se stessa)
+     - Commento: IDcommento, IDpost, IDutente, Testo
+     - Ricerca: per nome utente, per hashtag, per contenuto
+   - *Concetti chiave:* progettazione, auto-relazione, N:M, funzionalità, scalabilità
+
+8. **Quale argomento del programma ritieni più importante per il mondo del lavoro? Motiva la risposta.**
+   - *Sottoquesiti:*
+     - Quale argomento è usato più frequentemente?
+     - Quale argomento è pagato meglio?
+     - Quale argomento è meno facile da imparare da autodidatta?
+     - Come gli argomenti si collegano tra loro?
+     - Quale argomento avrà più domanda negli anni prossimi?
+   - *Suggerimenti per rispondere:*
+     - Progettazione E/R: fondamentale, richiesta in tutti i settori, difficile da imparare
+     - SQL: usatissimo, base di ogni lavoro con dati
+     - Sicurezza: sempre più importante, spesso sottovalutata, ben pagata
+     - Web: cresce costantemente, disponibilità di lavoro alta
+     - Possibile risposta: "La progettazione corretta è fondamentale perché un errore progettuale costa più tempo che non imparare meglio altre tecnologie"
+   - *Concetti chiave:* competenza, mercato del lavoro, futuro informatico, pratica, specializzazione
