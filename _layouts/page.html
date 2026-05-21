@@ -10,7 +10,9 @@
         <div class="container">
             <h1 class="heading">{{ page.title }}</h1>
             {{ content }}
-            <p>Ultima modifica a questa pagina: {{ "now" | date: "%d/%m/%Y alle %H:%M" }}</p>
+            {% if page.last_modified_at %}
+            <p>Ultima modifica a questa pagina: {{ page.last_modified_at | date: "%d/%m/%Y alle %H:%M" }}</p>
+            {% endif %}
         </div>
     </main>
     <!-- Footer -->

@@ -2,6 +2,7 @@
 layout: page
 title: Informatica
 permalink: /informatica
+last_modified_at: 2026-05-21 23:12
 ---
 
 ## Lista non esaustiva di domande per l’esame di informatica

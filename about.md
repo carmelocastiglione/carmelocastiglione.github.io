@@ -2,6 +2,7 @@
 layout: page
 title: About me
 permalink: /about
+last_modified_at: 2026-05-21 23:12
 ---
 
 Mi chiamo Carmelo Castiglione e insegno informatica presso [l'Istituto Tecnico Statale Francesco Viganò](https://www.issvigano.edu.it/) di Merate, in provincia di Lecco. La mia carriera da insegnante inizia nel 2020, quando sono stato chiamato dall'[Istituto Professionale Marisa Bellisario](https://www.iisbellisario.edu.it/) di Inzago, in provinca di Milano, per una supplenza molto breve e molto saltuaria come si addice ad un neo docente precario, anche se questa esperienza mi ha convinto ad intraprendere il percorso per diventare insegnante. Sono approdato a Merate l'anno successivo e qui sono rimasto.
