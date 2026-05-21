@@ -4,3 +4,4 @@ _site
 .jekyll-metadata
 vendor
 .vscode/
+assets/js/github-config.js

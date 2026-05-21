@@ -1,0 +1,338 @@
+<style>
+  .repo-browser {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin: 30px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  .language-box {
+    width: 100%;
+    background: #ffffff;
+    border: none;
+    border-top: 4px solid rgba(255, 255, 255, 0.1);
+    overflow: visible;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    border-radius: 8px;
+  }
+
+  .language-box:first-child {
+    border-top: 4px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .language-box:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .language-box.python .language-header { background: linear-gradient(135deg, #3776ab 0%, #ffd43b 100%); }
+  .language-box.java .language-header { background: linear-gradient(135deg, #007396 0%, #f89820 100%); }
+  .language-box.javascript .language-header { background: linear-gradient(135deg, #f7df1e 0%, #323330 100%); }
+  .language-box.cpp .language-header { background: linear-gradient(135deg, #00599c 0%, #00c7fd 100%); }
+  .language-box.c .language-header { background: linear-gradient(135deg, #a8b9cc 0%, #555555 100%); }
+  .language-box.html .language-header { background: linear-gradient(135deg, #e34c26 0%, #ffa500 100%); }
+  .language-box.css .language-header { background: linear-gradient(135deg, #1572b6 0%, #33a9dc 100%); }
+  .language-box.php .language-header { background: linear-gradient(135deg, #777bb4 0%, #fff 100%); }
+  .language-box.sql .language-header { background: linear-gradient(135deg, #336791 0%, #ffa500 100%); }
+  .language-box.default .language-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+  .language-header {
+    padding: 40px 60px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: none;
+  }
+
+  .language-header h3 {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .language-icon {
+    font-size: 42px;
+  }
+
+  .language-count {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .content {
+    padding: 40px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    background: #fafafa;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .folder-item {
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+  }
+
+  .folder-item:hover {
+    background: #ffffff;
+    border-color: #b0b0b0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .folder-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .folder-link a {
+    color: #333333;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+    word-break: break-word;
+    font-size: 14px;
+  }
+
+  .folder-link a:hover {
+    color: #667eea;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6a737d;
+    font-size: 16px;
+  }
+
+  .error {
+    padding: 40px;
+    background-color: #ffeef0;
+    color: #cb2431;
+    border-left: 4px solid #cb2431;
+    border-radius: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  .error a {
+    color: #cb2431;
+    font-weight: 600;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255, 255, 255, 0.7);
+    grid-column: 1 / -1;
+    font-size: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .language-header {
+      padding: 24px 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .language-header h3 {
+      font-size: 28px;
+      gap: 12px;
+    }
+
+    .language-icon {
+      font-size: 32px;
+    }
+
+    .content {
+      padding: 24px 20px;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 12px;
+    }
+
+    .folder-item {
+      padding: 12px;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .folder-link a {
+      font-size: 13px;
+    }
+  }
+</style>
+
+<div class="repo-browser">
+  <div class="loading">⏳ Caricamento contenuto dal repository...</div>
+</div>
+
+<script src="{{ '/assets/js/github-config.js' | relative_url }}"></script>
+<script>
+  const REPO_OWNER = 'carmelocastiglione';
+  const REPO_NAME = 'programmazione';
+  const API_BASE = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}`;
+
+  const languageConfig = {
+    'python': { icon: '🐍', class: 'python' },
+    'java': { icon: '☕', class: 'java' },
+    'javascript': { icon: '⚡', class: 'javascript' },
+    'js': { icon: '⚡', class: 'javascript' },
+    'cpp': { icon: '⚙️', class: 'cpp' },
+    'c': { icon: '⚒️', class: 'c' },
+    'html': { icon: '🌐', class: 'html' },
+    'css': { icon: '🎨', class: 'css' },
+    'php': { icon: '🐘', class: 'php' },
+    'sql': { icon: '📊', class: 'sql' }
+  };
+
+  function getLanguageConfig(langName) {
+    const normalized = langName.toLowerCase();
+    return languageConfig[normalized] || { icon: '📝', class: 'default' };
+  }
+
+  async function fetchWithAuth(url) {
+    const headers = (typeof GITHUB_TOKEN !== 'undefined' && GITHUB_TOKEN && GITHUB_TOKEN !== 'your_token_here') 
+      ? { 'Authorization': `token ${GITHUB_TOKEN}` } 
+      : {};
+    return fetch(url, { headers });
+  }
+
+  async function loadRepoContent() {
+    const browserDiv = document.querySelector('.repo-browser');
+    
+    try {
+      const response = await fetchWithAuth(`${API_BASE}/contents/`);
+      
+      if (response.status === 403) {
+        browserDiv.innerHTML = `
+          <div class="error">
+            <strong>⚠️ Limite API GitHub raggiunto (Rate Limit)</strong><br>
+            <small>L'API di GitHub anonima consente solo 60 richieste/ora.</small><br><br>
+            <strong>Soluzione:</strong><br>
+            1. Crea un token GitHub su: <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a><br>
+            2. Apri il file <code style="background: #333; padding: 2px 6px; border-radius: 3px; color: white;">assets/js/github-config.js</code><br>
+            3. Sostituisci <code>your_token_here</code> con il tuo token<br>
+            4. Ricarica la pagina
+          </div>
+        `;
+        return;
+      }
+      
+      if (!response.ok) throw new Error(`Errore ${response.status}: ${response.statusText}`);
+      
+      const items = await response.json();
+      const folders = items.filter(item => item.type === 'dir').sort((a, b) => a.name.localeCompare(b.name));
+      
+      if (folders.length === 0) {
+        browserDiv.innerHTML = '<div class="error">Nessuna cartella trovata nel repository.</div>';
+        return;
+      }
+      
+      let html = '';
+      for (const folder of folders) {
+        html += await createLanguageBox(folder);
+      }
+      
+      browserDiv.innerHTML = html;
+      
+    } catch (error) {
+      browserDiv.innerHTML = `<div class="error">❌ Errore: ${error.message}</div>`;
+    }
+  }
+
+  async function createLanguageBox(folder) {
+    try {
+      const contentsResponse = await fetchWithAuth(`${API_BASE}/contents/${folder.name}`);
+      if (!contentsResponse.ok) throw new Error('Errore');
+      
+      const contents = await contentsResponse.json();
+      
+      // Filtra solo le cartelle
+      const subfolders = contents.filter(item => item.type === 'dir').sort((a, b) => a.name.localeCompare(b.name));
+      
+      if (subfolders.length === 0) {
+        const config = getLanguageConfig(folder.name);
+        return `
+          <div class="language-box ${config.class}">
+            <div class="language-header">
+              <h3>
+                <span class="language-icon">${config.icon}</span>
+                ${folder.name}
+              </h3>
+            </div>
+            <div class="content">
+              <div class="empty-state">Nessuna cartella</div>
+            </div>
+          </div>
+        `;
+      }
+      
+      let contentHtml = '';
+      for (const subfolder of subfolders) {
+        contentHtml += `
+          <div class="folder-item">
+            <span class="folder-icon">📁</span>
+            <div class="folder-link">
+              <a href="${subfolder.html_url}" target="_blank" rel="noopener noreferrer">${subfolder.name}/</a>
+            </div>
+          </div>
+        `;
+      }
+      
+      const config = getLanguageConfig(folder.name);
+      return `
+        <div class="language-box ${config.class}">
+          <div class="language-header">
+            <h3>
+              <span class="language-icon">${config.icon}</span>
+              ${folder.name}
+            </h3>
+            <div class="language-count">${subfolders.length} cartelle</div>
+          </div>
+          <div class="content">
+            ${contentHtml}
+          </div>
+        </div>
+      `;
+      
+    } catch (error) {
+      const config = getLanguageConfig(folder.name);
+      return `
+        <div class="language-box ${config.class}">
+          <div class="language-header">
+            <h3>
+              <span class="language-icon">${config.icon}</span>
+              ${folder.name}
+            </h3>
+          </div>
+          <div class="content">
+            <div class="error">Errore nel caricamento</div>
+          </div>
+        </div>
+      `;
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadRepoContent);
+  } else {
+    loadRepoContent();
+  }
+</script>
