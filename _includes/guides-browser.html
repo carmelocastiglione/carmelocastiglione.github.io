@@ -1,0 +1,241 @@
+<style>
+  .guides-browser {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 30px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  .guides-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 60px 60px;
+    color: white;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 0;
+  }
+
+  .guides-header h2 {
+    margin: 0 0 8px 0;
+    font-size: 36px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .guides-header p {
+    margin: 0;
+    font-size: 16px;
+    opacity: 0.9;
+  }
+
+  .guides-header-icon {
+    font-size: 42px;
+  }
+
+  .guides-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: #ffffff;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+  }
+
+  .guide-item {
+    padding: 32px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.2s ease;
+    background: #ffffff;
+  }
+
+  .guide-item:last-child {
+    border-bottom: none;
+  }
+
+  .guide-item:hover {
+    background: #fafafa;
+  }
+
+  .guide-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .guide-name-icon {
+    font-size: 22px;
+  }
+
+  .guide-link-button {
+    display: inline-block;
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 8px 20px;
+    border-radius: 6px;
+    border: 1px solid #667eea;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .guide-link-button:hover {
+    background: #667eea;
+    color: white;
+  }
+
+  .loading {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6a737d;
+    font-size: 16px;
+  }
+
+  .error {
+    padding: 40px;
+    background-color: #ffeef0;
+    color: #cb2431;
+    border-left: 4px solid #cb2431;
+    border-radius: 0 0 12px 12px;
+    margin: 0;
+    width: 100%;
+  }
+
+  .error a {
+    color: #cb2431;
+    font-weight: 600;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6a737d;
+    font-size: 16px;
+    background: #ffffff;
+    border-radius: 0 0 12px 12px;
+  }
+
+  @media (max-width: 768px) {
+    .guides-header {
+      padding: 40px 20px;
+    }
+
+    .guides-header h2 {
+      font-size: 28px;
+    }
+
+    .guide-item {
+      padding: 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .guide-name {
+      font-size: 16px;
+    }
+
+    .guide-link-button {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<div class="guides-browser">
+  <div class="guides-header">
+    <h2>
+      <span class="guides-header-icon">📚</span>
+      Guide
+    </h2>
+    <p>Raccolte di articoli e risorse per approfondire vari argomenti</p>
+  </div>
+
+  <div class="guides-list loading">
+    <div style="padding: 60px 20px; text-align: center;">⏳ Caricamento guide...</div>
+  </div>
+</div>
+
+<script src="{{ '/assets/js/github-config.js' | relative_url }}"></script>
+<script>
+  const GUIDES_REPO_OWNER = 'carmelocastiglione';
+  const GUIDES_REPO_NAME = 'guide';
+  const GUIDES_API_BASE = `https://api.github.com/repos/${GUIDES_REPO_OWNER}/${GUIDES_REPO_NAME}`;
+
+  async function fetchWithAuth(url) {
+    const headers = (typeof GITHUB_TOKEN !== 'undefined' && GITHUB_TOKEN && GITHUB_TOKEN !== 'your_token_here') 
+      ? { 'Authorization': `token ${GITHUB_TOKEN}` } 
+      : {};
+    return fetch(url, { headers });
+  }
+
+  async function loadGuides() {
+    const container = document.querySelector('.guides-list');
+    
+    try {
+      const response = await fetchWithAuth(`${GUIDES_API_BASE}/contents/`);
+      
+      if (response.status === 403) {
+        container.innerHTML = `
+          <div class="error">
+            <strong>⚠️ Limite API GitHub raggiunto (Rate Limit)</strong><br>
+            <small>L'API di GitHub anonima consente solo 60 richieste/ora.</small><br><br>
+            <strong>Soluzione:</strong><br>
+            1. Crea un token GitHub su: <a href="https://github.com/settings/tokens" target="_blank">github.com/settings/tokens</a><br>
+            2. Apri il file <code style="background: #333; padding: 2px 6px; border-radius: 3px; color: white;">assets/js/github-config.js</code><br>
+            3. Sostituisci <code>your_token_here</code> con il tuo token<br>
+            4. Ricarica la pagina
+          </div>
+        `;
+        return;
+      }
+      
+      if (!response.ok) throw new Error(`Errore ${response.status}: ${response.statusText}`);
+      
+      const items = await response.json();
+      const mdFiles = items
+        .filter(item => item.type === 'file' && item.name.endsWith('.md'))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      
+      if (mdFiles.length === 0) {
+        container.innerHTML = '<div class="empty-state">Nessuna guida trovata nel repository.</div>';
+        return;
+      }
+      
+      let html = '';
+      for (const file of mdFiles) {
+        const fileName = file.name.replace('.md', '').replace(/[-_]/g, ' ');
+        html += `
+          <div class="guide-item">
+            <p class="guide-name">
+              <span class="guide-name-icon">📖</span>
+              ${fileName}
+            </p>
+            <a href="${file.html_url}" target="_blank" rel="noopener noreferrer" class="guide-link-button">Leggi →</a>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = html;
+      container.classList.remove('loading');
+      
+    } catch (error) {
+      container.innerHTML = `<div class="error">❌ Errore: ${error.message}</div>`;
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadGuides);
+  } else {
+    loadGuides();
+  }
+</script>
