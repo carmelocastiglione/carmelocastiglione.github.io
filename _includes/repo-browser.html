@@ -72,7 +72,7 @@
   .content {
     padding: 40px 60px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
     background: #fafafa;
     border-radius: 0 0 8px 8px;
@@ -97,8 +97,24 @@
   }
 
   .folder-icon {
-    font-size: 20px;
+    font-size: 14px;
     flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .folder-icon.with-number {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+  }
+
+  .folder-icon.empty {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   }
 
   .folder-link a {
@@ -163,7 +179,7 @@
 
     .content {
       padding: 24px 20px;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 12px;
     }
 
@@ -286,11 +302,29 @@
       
       let contentHtml = '';
       for (const subfolder of subfolders) {
+        const nameWithoutSlash = subfolder.name;
+        const displayName = nameWithoutSlash.replace(/_/g, ' ');
+        
+        // Controlla se il nome inizia con due numeri (es: 01_... o 01-)
+        const numberMatch = nameWithoutSlash.match(/^(\d{2})/);
+        let label, labelClass, textName;
+        
+        if (numberMatch) {
+          label = numberMatch[1];
+          labelClass = 'with-number';
+          // Rimuovi i numeri e il separatore (underscore o hyphen) dal nome
+          textName = nameWithoutSlash.replace(/^\d{2}[_-]/, '').replace(/_/g, ' ');
+        } else {
+          label = '';
+          labelClass = 'empty';
+          textName = displayName;
+        }
+        
         contentHtml += `
           <div class="folder-item">
-            <span class="folder-icon">📁</span>
+            <span class="folder-icon ${labelClass}">${label}</span>
             <div class="folder-link">
-              <a href="${subfolder.html_url}" target="_blank" rel="noopener noreferrer">${subfolder.name}/</a>
+              <a href="${subfolder.html_url}" target="_blank" rel="noopener noreferrer">${textName}</a>
             </div>
           </div>
         `;
